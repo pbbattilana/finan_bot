@@ -1,4 +1,5 @@
 import re
+import unicodedata
 
 def parse_fields(text):
     """Extrae fecha, monto y cuenta de un texto OCR.
@@ -8,6 +9,7 @@ def parse_fields(text):
     - "Gs 195.000" -> 195000
     - "Gs 10O50"   -> 10050
     """
+    text = unicodedata.normalize("NFKC", text)
     print("🔍 Texto recibido para parsear:\n", text)
 
     # Buscar fecha
