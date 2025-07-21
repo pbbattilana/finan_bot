@@ -13,6 +13,7 @@ Este proyecto implementa un bot de Telegram que recibe fotos de comprobantes de 
   - `regex.py`: define las expresiones regulares para identificar fecha, monto y número de comprobante.
   - `bd_sqlalchemy.py`: configuración de SQLAlchemy y función `save_record` que persiste los pagos.
   - `requirements.txt`: dependencias de la aplicación.
+  - `parser/`: paquete con parsers especializados por tipo de comprobante (pago, transferencia y servicio) de Ueno Bank.
 
 ## Ejecución rápida
 
