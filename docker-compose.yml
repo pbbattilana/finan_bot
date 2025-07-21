@@ -1,0 +1,25 @@
+version: '3.9'
+services:
+  bot:
+    build: .
+    container_name: finan_bot
+    volumes:
+      - ./app:/app:Z
+      - ./downloads:/app/downloads:Z
+    env_file:
+      - .env 
+    depends_on:
+      - db
+
+  db:
+    image: postgres:15
+    container_name: finan_postgres
+    env_file:
+      - .env 
+    volumes:
+      - finan_pgdata:/var/lib/postgresql/data
+    ports:
+    - "5432:5432"
+
+volumes:
+  finan_pgdata:

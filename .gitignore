@@ -1,0 +1,60 @@
+# 🐍 Python
+__pycache__/
+*.py[cod]
+*.egg
+*.egg-info/
+dist/
+build/
+.env
+.env.*
+
+# 📸 OCR / Datos
+*.png
+*.jpg
+*.jpeg
+*.csv
+*.tsv
+*.log
+*.db
+
+# 🔒 Claves o configuraciones sensibles
+secrets/
+*.key
+*.pem
+*.crt
+
+# 📦 Entornos virtuales
+venv/
+env/
+.venv/
+
+# 🐳 Docker/Podman
+*.pid
+*.sock
+*.pid.lock
+docker-compose.override.yml
+# Evitá subir volúmenes si usás bind mounts:
+volumes/
+data/
+
+# 🧠 VSCode / PyCharm / JetBrains
+.vscode/
+.idea/
+*.iml
+
+# 🐘 PostgreSQL dump (opcional)
+*.sql
+
+# 🧪 Testing / coverage
+.coverage
+.tox/
+.nox/
+.cache/
+.pytest_cache/
+
+# 📜 Logs
+*.log
+
+# 📦 Dependencias lock (si no son necesarias en tu deploy)
+Pipfile.lock
+poetry.lock
