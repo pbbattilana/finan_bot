@@ -19,7 +19,7 @@ def parse_fields(text):
     if monto_match:
         bruto = monto_match.group(1)
         print("🛠️ Monto antes de limpiar:", bruto)
-        bruto.replace('C', '.').replace('O', '0').replace('o', '0')
+        bruto = bruto.replace('C', '.').replace('O', '0').replace('o', '0')
         bruto = re.sub(r'[^\d.]', '', bruto)
         print("🧹 Monto limpio:", bruto)
         try:
