@@ -27,20 +27,6 @@ class TipoMovimiento(Base):
     id = Column(Integer, primary_key=True)
     nombre = Column(String, unique=True)
 
-
-
-class Entidad(Base):
-    __tablename__ = 'entidades'
-    id = Column(Integer, primary_key=True)
-    nombre = Column(String, unique=True)
-
-
-class TipoMovimiento(Base):
-    __tablename__ = 'tipos_movimiento'
-    id = Column(Integer, primary_key=True)
-    nombre = Column(String, unique=True)
-
-
 class Movimiento(Base):
     __tablename__ = 'movimientos'
 
