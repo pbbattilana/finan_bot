@@ -8,11 +8,25 @@ from sqlalchemy import (
     Numeric,
     Boolean,
     ForeignKey,
+    text,
 )
 from sqlalchemy.orm import declarative_base, sessionmaker, relationship
 from datetime import datetime
 
 Base = declarative_base()
+
+
+class Entidad(Base):
+    __tablename__ = 'entidades'
+    id = Column(Integer, primary_key=True)
+    nombre = Column(String, unique=True)
+
+
+class TipoMovimiento(Base):
+    __tablename__ = 'tipos_movimiento'
+    id = Column(Integer, primary_key=True)
+    nombre = Column(String, unique=True)
+
 
 
 class Entidad(Base):
@@ -53,6 +67,35 @@ engine   = create_engine(f"postgresql://{db_user}:{db_pass}@{db_host}/{db_name}"
 
 Session = sessionmaker(bind=engine)
 Base.metadata.create_all(engine)
+
+
+def _ensure_schema():
+    """Add new columns if the existing table is outdated."""
+    insp = engine.execute(
+        text(
+            "SELECT column_name FROM information_schema.columns WHERE table_name='movimientos'"
+        )
+    )
+    existing = {row[0] for row in insp}
+
+    columns = {
+        "hora": "VARCHAR(10)",
+        "nro_comprobante": "VARCHAR(50)",
+        "cuenta_origen": "VARCHAR(50)",
+        "beneficiario": "VARCHAR(120)",
+        "es_ingreso": "BOOLEAN",
+        "tipo_id": "INTEGER",
+        "entidad_id": "INTEGER",
+    }
+
+    for name, coltype in columns.items():
+        if name not in existing:
+            engine.execute(
+                text(f"ALTER TABLE movimientos ADD COLUMN {name} {coltype}")
+            )
+
+
+_ensure_schema()
 
 def _get_or_create(session, model, **kwargs):
     inst = session.query(model).filter_by(**kwargs).first()
