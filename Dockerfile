@@ -13,4 +13,4 @@ COPY app/requirements.txt .
 RUN pip install --no-cache-dir -r requirements.txt
 
 # No se copia el código, se monta con volumen
-CMD ["python", "receiver_downloader.py"]
+CMD ["python", "-u", "receiver_downloader.py"]
