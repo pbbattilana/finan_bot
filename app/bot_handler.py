@@ -14,8 +14,12 @@ def process_image(path, update, ctx):
     print(text)
     parser_fn = get_parser(text)
     fields = parser_fn(text)
-    if not fields.get('fecha') or not fields.get('monto'):
-        fields = parse_fields(text)
+
+    # Extraer campos básicos con expresiones regulares si faltan
+    fallback = parse_fields(text)
+    for key, val in fallback.items():
+        if not fields.get(key) and val:
+            fields[key] = val
 
     ctx.bot.send_message(update.effective_chat.id, f"OCR detectado:\n{text[:400]}...")
 
