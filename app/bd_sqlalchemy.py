@@ -57,13 +57,6 @@ Base.metadata.create_all(engine)
 
 def _ensure_schema():
     """Add new columns if the existing table is outdated."""
-    insp = engine.execute(
-        text(
-            "SELECT column_name FROM information_schema.columns WHERE table_name='movimientos'"
-        )
-    )
-    existing = {row[0] for row in insp}
-
     columns = {
         "hora": "VARCHAR(10)",
         "nro_comprobante": "VARCHAR(50)",
@@ -74,12 +67,15 @@ def _ensure_schema():
         "entidad_id": "INTEGER",
     }
 
-    for name, coltype in columns.items():
-        if name not in existing:
-            engine.execute(
-                text(f"ALTER TABLE movimientos ADD COLUMN {name} {coltype}")
-            )
+    with engine.begin() as conn:  # ← usar begin() en vez de connect() + commit()
+        result = conn.execute(
+            text("SELECT column_name FROM information_schema.columns WHERE table_name='movimientos'")
+        )
+        existing = {row[0] for row in result}
 
+        for name, coltype in columns.items():
+            if name not in existing:
+                conn.execute(text(f"ALTER TABLE movimientos ADD COLUMN {name} {coltype}"))
 
 _ensure_schema()
 
