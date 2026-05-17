@@ -27,6 +27,7 @@ secrets/
 venv/
 env/
 .venv/
+.env.*
 
 # 🐳 Docker/Podman
 *.pid
@@ -58,3 +59,5 @@ data/
 # 📦 Dependencias lock (si no son necesarias en tu deploy)
 Pipfile.lock
 poetry.lock
+
+node_modules
